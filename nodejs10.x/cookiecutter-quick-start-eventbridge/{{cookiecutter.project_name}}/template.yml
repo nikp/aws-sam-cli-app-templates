@@ -1,0 +1,42 @@
+# This is the SAM template that represents the architecture of your serverless application
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
+
+# The AWSTemplateFormatVersion identifies the capabilities of the template
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  {{ cookiecutter.project_name }}
+
+  Sample SAM Template for {{ cookiecutter.project_name }}
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+# Resources declares the AWS resources that you want to include in the stack
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
+Resources:
+  # This is the Lambda function definition associated with the source code: eventBridge-target.ts. For all available properties, see
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  EC2InstanceStatusHandler:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Handler: ./dist/handlers/eventBridge-target.handler #The Typescript source code is compiled to javascript and placed in the 'dist' folder, you can configure that in tsconfig.json
+      Runtime: nodejs10.x
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+      MemorySize: 128
+      Timeout: 100
+
+Outputs:
+  EC2InstanceStatusHandler:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt EC2InstanceStatusHandler.Arn
+  EC2InstanceStatusHandlerIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt EC2InstanceStatusHandler.Arn

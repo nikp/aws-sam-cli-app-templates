@@ -1,0 +1,22 @@
+{
+    "name": "eventBridge_hello_world",
+    "version": "1.0.0",
+    "description": "Event Bridge SAM sample for NodeJS",
+    "main": "./dist/eventBridge-target.js",
+    "repository": "https://github.com/awslabs/aws-sam-cli-app-templates/...FINISHME",
+    "author": "SAM CLI",
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^0.18.0"
+    },
+    "scripts": {
+        "test": "jest"
+    },
+    "devDependencies": {
+        "jest": "^24.7.1",
+        "@types/aws-lambda": "^8.10.19",
+        "class-transformer": "^0.2.3",
+        "tslint": "^5.12.1",
+        "typescript": "^3.3.3"
+    }
+}

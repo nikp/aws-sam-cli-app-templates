@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "noImplicitAny": false,
+      "suppressImplicitAnyIndexErrors": true,
+      "strictPropertyInitialization": false,
+      "declaration": true,
+      "target": "es6",
+      "module": "commonjs",
+      "outDir": "dist",
+      "strict": true,
+      "baseUrl": "./",
+      "esModuleInterop": true,
+      "inlineSourceMap": true
+    },
+    "include": [
+      "src/**/*"
+    ],
+    "exclude": [
+      "node_modules",
+      "dist"
+    ],
+  }
