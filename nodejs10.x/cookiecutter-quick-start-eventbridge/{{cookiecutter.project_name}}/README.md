@@ -21,9 +21,15 @@ To get started, see the following:
 
 # Compile the TypeScript code to Lambda's NodeJS runtime
 
-* `npm install`
-* `tsc`
 
+```
+npm install
+npm run build
+```
+
+To monitor your typescript changes and automatically re-compile them, you can run `tsc-watch`.
+
+After making any changes you also need to re-run `sam build`.
 
 ## Deploy the sample application
 

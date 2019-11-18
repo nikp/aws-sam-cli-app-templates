@@ -15,10 +15,15 @@ Generate a boilerplate template in your current project directory using the foll
 > **NOTE**: ``--name`` allows you to specify a different project folder name
 
 Compile the Typescript code to NodeJS to match the Lambda runtime
-* `npm install`
-* `tsc`
 
-Use the suite of SAM CLI commands to build the Lambda function, package it, and deploy it (see [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html0) for more)
+```
+npm install
+npm run build
+```
+
+To monitor your typescript changes and automatically re-compile them, you can run `tsc-watch`
+
+After that, use the suite of SAM CLI commands to build the Lambda function, package it, and deploy it (see [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html0) for more)
 
 # Credits
 
