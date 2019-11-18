@@ -19,6 +19,12 @@ To get started, see the following:
 * [VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/welcome.html)
 * [Visual Studio](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/welcome.html)
 
+# Compile the TypeScript code to Lambda's NodeJS runtime
+
+* `npm install`
+* `tsc`
+
+
 ## Deploy the sample application
 
 The AWS SAM CLI is an extension of the AWS CLI that adds functionality for building and testing Lambda applications. It uses Docker to run your functions in an Amazon Linux environment that matches Lambda. It can also emulate your application's build environment and API.
@@ -57,7 +63,7 @@ my-application$ sam deploy \
 
 ## Use the AWS SAM CLI to build and test locally
 
-Build your application by using the `sam build` command.
+Build your application by using the `sam build` command. (Make sure you already compiled the Typescript code to Node as referenced)
 
 ```bash
 my-application$ sam build
@@ -83,11 +89,18 @@ Update `template.yml` to add a dead-letter queue to your application. In the **R
 Resources:
   MyQueue:
     Type: AWS::SQS::Queue
-  ScheduledEventLogger:
-    Type: AWS::Serverless::Function
+  EC2InstanceStatusHandler:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      Handler: src/handlers/scheduled-event-logger.scheduledEventLogger
+      Handler: ./dist/handlers/eventBridge-target.handler #The Typescript source code is compiled to javascript and placed in the 'dist' folder, you can configure that in tsconfig.json
       Runtime: nodejs10.x
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+      MemorySize: 128
+      Timeout: 100
       DeadLetterQueue:
         Type: SQS
         TargetArn: !GetAtt MyQueue.Arn
@@ -132,6 +145,7 @@ Tests are defined in the `__tests__` folder in this project. Use `npm` to instal
 
 ```bash
 my-application$ npm install
+my-application$ tsc
 my-application$ npm run test
 ```
 
